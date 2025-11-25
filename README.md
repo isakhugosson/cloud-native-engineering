@@ -1,4 +1,4 @@
-# Cloud-Native Analytics Demo
+# Cloud-Native Engineering Demo
 
 End-to-end demo of a **modern analytics stack** running on a small Debian server:
 
