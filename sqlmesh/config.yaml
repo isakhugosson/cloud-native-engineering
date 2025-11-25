@@ -1,0 +1,23 @@
+model_defaults:
+  dialect: postgres
+
+gateways:
+  dev:
+    connection:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: appuser
+      password: app_pw
+      database: analytics_dev
+
+  prod:
+    connection:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: appuser
+      password: app_pw
+      database: analytics_prod
+
+default_gateway: dev

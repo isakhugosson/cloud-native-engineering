@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: native-cloud-engineering
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: app_pw
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+
+  cube:
+    image: cubejs/cube:latest
+    container_name: cube-native-cloud
+    restart: unless-stopped
+    environment:
+      CUBEJS_DEV_MODE: "true"
+      CUBEJS_DB_TYPE: "postgres"
+      CUBEJS_DB_HOST: "postgres"
+      CUBEJS_DB_PORT: "5432"
+      CUBEJS_DB_NAME: "analytics_dev"
+      CUBEJS_DB_USER: "appuser"
+      CUBEJS_DB_PASS: "app_pw"
+      CUBEJS_API_SECRET: "supersecret"
+    depends_on:
+      - postgres
+    ports:
+      - "4000:4000"
+      - "3000:3000"
+    volumes:
+      - ./cube:/cube/conf
+
+volumes:
+  pg_data:

@@ -1,0 +1,127 @@
+cubes:
+  - name: dim_company
+    sql: |
+      SELECT
+        company_key,
+        company_code,
+        company_name
+      FROM dw.dim_company
+
+    dimensions:
+      - name: company_key
+        sql: company_key
+        type: number
+        primary_key: true
+
+      - name: company_code
+        sql: company_code
+        type: string
+
+      - name: company_name
+        sql: company_name
+        type: string
+
+  - name: dim_account
+    sql: |
+      SELECT
+        account_key,
+        account_no,
+        account_name,
+        account_group
+      FROM dw.dim_account
+
+    dimensions:
+      - name: account_key
+        sql: account_key
+        type: number
+        primary_key: true
+
+      - name: account_no
+        sql: account_no
+        type: number
+
+      - name: account_name
+        sql: account_name
+        type: string
+
+      - name: account_group
+        sql: account_group
+        type: string
+
+  - name: dim_project
+    sql: |
+      SELECT
+        project_key,
+        project_code,
+        project_name
+      FROM dw.dim_project
+
+    dimensions:
+      - name: project_key
+        sql: project_key
+        type: number
+        primary_key: true
+
+      - name: project_code
+        sql: project_code
+        type: string
+
+      - name: project_name
+        sql: project_name
+        type: string
+
+  - name: fact_generalledger
+    sql: |
+      SELECT
+        company_key,
+        account_key,
+        project_key,
+        posting_date,
+        amount,
+        voucher_id
+      FROM dw.fact_generalledger
+
+    measures:
+      - name: amount
+        sql: amount
+        type: sum
+        title: Utfall
+
+      - name: row_count
+        type: count
+        title: Antal rader
+
+    dimensions:
+      - name: posting_date
+        sql: posting_date
+        type: time
+
+      - name: voucher_id
+        sql: voucher_id
+        type: string
+
+      - name: company_key
+        sql: company_key
+        type: number
+        primary_key: true
+
+      - name: account_key
+        sql: account_key
+        type: number
+
+      - name: project_key
+        sql: project_key
+        type: number
+
+    joins:
+      - name: dim_company
+        relationship: belongsTo
+        sql: "{CUBE}.company_key = {dim_company}.company_key"
+
+      - name: dim_account
+        relationship: belongsTo
+        sql: "{CUBE}.account_key = {dim_account}.account_key"
+
+      - name: dim_project
+        relationship: belongsTo
+        sql: "{CUBE}.project_key = {dim_project}.project_key"
