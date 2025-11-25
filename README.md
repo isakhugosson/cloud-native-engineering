@@ -6,7 +6,8 @@ End-to-end demo of a **modern analytics stack** running on a small Debian server
 - **SQLMesh** for version-controlled transformations as for T in ELT/ETL
 - **Cube.dev** as a semantic layer & API ready for embedded analytics and AI-ready
 
-The goal is to show how you can go from **raw data** → **DW star schema** → **API / charts** in a cloud-native way. Version-controlled ftw!!
+The goal is to show how you can go from **raw data** → **DW star schema** → **API / charts** in a cloud-native way. 
+- Version-controlled all the way😍
 
 ---
 
